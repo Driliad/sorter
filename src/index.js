@@ -1,62 +1,52 @@
 class Sorter {
-  constructor() {
-    // your implementation
-    this.array = [];
+	constructor() {
+		this.array = [];
+	}
 
-    this.compareFunction = function (a, b) {
-      if (a < b) return -1;
-      if (a > b) return 1;
+	compareFunction(a, b) {
+		if (a < b) return -1;
+		if (a > b) return 1;
 
-      return 0;
-    }
-  }
+		return 0;
+	}
 
-  add(element) {
-    // your implementation
-    return this.array.push(element);
-  }
+	add(element) {
+		this.array.push(element);
+	}
 
-  at(index) {
-    // your implementation
-    return this.array[index];
-  }
+	at(index) {
+		return this.array[index];
+	}
 
-  get length() {
-    // your implementation
-    return this.array.length;
-  }
+	get length() {
+		return this.array.length;
+	}
 
-  toArray() {
-    // your implementation
-    return this.array;
-  }
+	toArray() {
+		return this.array;
+	}
 
-  sort(indices) {
-    // your implementation
+	sort(indices = []) {
+		let sortArray = [];
 
-    var sortArray = [];
+		for (let index = 0; index < indices.length; index++) {
+			sortArray.push(this.array[indices[index]]);
+		}
 
-    this.array.forEach((value, index) => {
-      for (let i = 0; i < indices.length; i++) {
-        if (indices[i] === index) sortArray.push(value);
-      }
-    })
+		if (this.compareFunction) {
+			sortArray.sort(this.compareFunction);
+		}
 
-    if (this.compareFunction) {
-      sortArray.sort(this.compareFunction);
-    }
+		this.array.forEach((value, index) => {
+			for (let i = 0; i < indices.length; i++) {
+				if (indices[i] === index) this.array[index] = sortArray.shift();
+			}
+		});
+	}
 
-    this.array.forEach((value, index) => {
-      for (let i = 0; i < indices.length; i++) {
-        if (indices[i] === index) this.array[index] = sortArray.shift();
-      }
-    })
-  }
-
-  setComparator(compareFunction) {
-    // your implementation
-    this.compareFunction = compareFunction;
-  }
+	setComparator(compareFunction) {
+		this.compareFunction = compareFunction;
+	}
 }
 
 module.exports = Sorter;
